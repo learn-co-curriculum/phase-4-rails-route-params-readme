@@ -24,7 +24,7 @@ page that doesn't take any parameters and simply renders a view. For example:
 contains a route such as:
 
 ```ruby
-get '/cheeses', to: "cheeses#index"
+get '/cheeses', to: 'cheeses#index'
 ```
 
 This is mapped to the `cheeses` controller and its `index` action, which renders
@@ -106,25 +106,23 @@ end
 ```
 
 Running `bundle exec rspec` gives us an expected error:
-`ActionController::RoutingError: No route matches [GET] "/cheeses/1"`. To
-correct this error, let's draw a route in `config/routes.rb` that maps to a show
-action in the `CheesesController`:
+`ActionController::RoutingError: No route matches [GET] "/cheeses/1"`.
+
+To correct this error, let's draw a route in `config/routes.rb` that maps to a
+show action in the `CheesesController`:
 
 ```ruby
 get '/cheeses/:id', to: 'cheeses#show'
 ```
 
-Here you will notice something that's different from the static route. The
-`/:id` tells the routing system that this route can receive a parameter and that
-the parameter will be passed to the controller's `show` action. With this route
-in place, let's run our tests again.
+You will notice something that's different from the static route. The `/:id`
+tells the routing system that this route can receive a parameter and that the
+parameter will be passed to the controller's `show` action. With this route in
+place, let's run our tests again.
 
-You should see a new failure this time: `ActionController::RoutingError: uninitialized constant CheesesController`.
-
-Once we stub out a `CheesesController` class in
-`app/controllers/cheeses_controller.rb`, running the tests again will give us
-yet another new failure:
+You should see a new failure this time:
 `AbstractController::ActionNotFound: The action 'show' could not be found for CheesesController`.
+
 This means that we need to create a corresponding `show` action in the
 `CheesesController`. Let's get this failure fixed with the code below:
 
@@ -137,7 +135,9 @@ class CheesesController < ApplicationController
 end
 ```
 
-Run the tests again. TODO: capture test error and add here
+Run the tests again. We're getting a new error:
+`JSON::ParserError: unexpected token at ''`. The reason for this error is
+because we're not returning any JSON data from our controller action.
 
 If you start the Rails server and navigate to `/cheeses/1` or any other cheese
 record, the router will know what you're talking about. However, the controller
@@ -165,7 +165,8 @@ store this record in the `cheese` variable, which we can then use to render JSON
 data for that cheese object.
 
 And with that, all our tests are passing, and you now know how to create dynamic
-routes in Rails!
+routes in Rails! You should also be able to run `rails s` and visit
+`localhost:3000/cheeses/1` to see the JSON data for one individual cheese.
 
 The `params` hash will keep coming back throughout this phase, so make sure you
 feel comfortable with this concept. For instance: if we wanted a different key
