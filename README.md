@@ -1,9 +1,20 @@
-# URL Params
+# Route Params
 
 ## Learning Goals
 
 - Create a dynamic route
 - Use route parameters in the controller via the params hash
+
+## Setup
+
+Fork and clone this repo, then run:
+
+```sh
+bundle install
+rails db:migrate db:seed
+```
+
+This will download all the dependencies for our app and set up the database.
 
 ## Review
 
