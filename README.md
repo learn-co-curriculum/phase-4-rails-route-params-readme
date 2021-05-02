@@ -174,7 +174,7 @@ rather than `:id` in the params hash, what do you think would need to change?
 Experiment a bit with the code in the `routes.rb` file and the controller, and
 use `byebug` to test your assumptions!
 
-## Summary
+## Conclusion
 
 Dynamic routes are helpful when we want to associate some data from the URL with
 a record from the database. To create a dynamic route, use the `:param_name`
