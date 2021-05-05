@@ -34,7 +34,7 @@ get '/cheeses', to: 'cheeses#index'
 This is mapped to the `cheeses` controller and its `index` action, which renders
 an array of cheeses as JSON.
 
-## Dynamic Requests
+## Dynamic Routes
 
 Consider this scenario: We're building a frontend feature for displaying data
 about one individual cheese. It'd be nice to be able to request data about _one
@@ -63,9 +63,9 @@ get '/cheeses/:id', to: 'cheeses#show'
 
 A breakdown of the dynamic route process flow is below:
 
-1. The `routes.rb` file takes in the request and processes it like normal,
-   except this time it also parses the `3` as a **URL parameter** and passes it to the
-   `CheesesController`.
+1. The `routes.rb` file takes in the request to `localhost:3000/cheeses/3` and
+   processes it like normal, except this time it also parses the `3` as a **URL
+   parameter** and passes it to the `CheesesController`.
 
 2. From that point, the controller action that you write will parse the `3`
    parameter and run a query on the `Cheese` model.
@@ -81,7 +81,7 @@ In review, what's the difference between static and dynamic routes?
   For example, when `3` is passed in as the parameter to the `/cheeses/:id`
   route, the app should render the data for the cheese with an ID of `3`. When
   `222` is passed in, the app should render the data for the cheese with an ID
-  of `3`.
+  of `222`.
 
 ## Code Implementation
 
