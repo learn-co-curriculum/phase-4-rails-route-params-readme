@@ -109,7 +109,7 @@ RSpec.describe 'Cheeses', type: :request do
 end
 ```
 
-Running `bundle exec rspec` gives us an expected error:
+Running `learn test` gives us an expected error:
 `ActionController::RoutingError: No route matches [GET] "/cheeses/1"`.
 
 To correct this error, let's draw a route in `config/routes.rb` that maps to a
@@ -128,31 +128,56 @@ You should see a new failure this time:
 `AbstractController::ActionNotFound: The action 'show' could not be found for CheesesController`.
 
 This means that we need to create a corresponding `show` action in the
-`CheesesController`. Let's get this failure fixed with the code below:
+`CheesesController`. Let's get this failure fixed by adding a show action to our controller:
 
 ```ruby
 # app/controllers/cheeses_controller.rb
 
 class CheesesController < ApplicationController
+  def index
+    cheeses = Cheese.all
+    render json: cheeses
+  end
+  
   def show
   end
 end
 ```
 
-Run the tests again. We're getting a new error:
-`JSON::ParserError: unexpected token at ''`. The reason for this error is
-because we're not returning any JSON data from our controller action.
+Run the tests again. You'll see a new error: `JSON::ParserError: unexpected
+token at ''`. We're getting this error because we're not returning any JSON data
+from our controller action.
 
 If you start the Rails server and navigate to `/cheeses/1` or any other cheese
-record, the router will know what you're talking about. However, the controller
+record, the router will know what you're talking about so it won't return an
+error. However, it won't display the requested content because the controller
 still needs to be told what to do with the `id`.
 
 ### The Params Hash
 
 We first need to get the ID sent by the user through the dynamic URL. This
-variable is passed into the controller in a hash called `params`. Since we named
-the route `/cheeses/:id`, the ID will be the value of the `:id` key, stored in
-`params[:id]`. Let's set that up here:
+variable is passed into the controller in a hash called `params`. Let's put a
+`byebug` inside our `#show` action:
+
+```ruby
+# app/controllers/posts_controller.rb
+
+def show
+  byebug
+end
+```
+
+Run the tests to drop into the debugger and take a look at the value of
+`params`. You should see this:
+
+```bash
+#<ActionController::Parameters {"controller"=>"cheeses", "action"=>"show", "id"=>"1"} permitted: false>
+```
+
+Since we named the route `/cheeses/:id`, the ID is the value of the `:id` key,
+stored in `params[:id]`. You can verify that by checking the value of
+`params[:id]` in byebug. So next we can set up our `#show` action to find and
+display the requested cheese:
 
 ```ruby
 # app/controllers/posts_controller.rb
@@ -163,12 +188,12 @@ def show
 end
 ```
 
-In this line, our show action is running a database query on the `Cheese` model
-that will return a cheese with an ID that matches the route parameters. It will
-store this record in the `cheese` variable, which we can then use to render JSON
-data for that cheese object.
+In the first line, our show action is running a database query on the `Cheese`
+model that will return a cheese with an ID that matches the route parameters. It
+will store this record in the `cheese` variable, which we can then use to render
+JSON data for that cheese object.
 
-And with that, all our tests are passing, and you now know how to create dynamic
+And with that, our test is passing, and you now know how to create dynamic
 routes in Rails! You should also be able to run `rails s` and visit
 `localhost:3000/cheeses/1` to see the JSON data for one individual cheese.
 
