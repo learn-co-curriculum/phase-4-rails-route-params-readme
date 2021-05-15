@@ -138,15 +138,15 @@ class CheesesController < ApplicationController
     cheeses = Cheese.all
     render json: cheeses
   end
-  
+
   def show
   end
 end
 ```
 
-Run the tests again. You'll see a new error: `JSON::ParserError: unexpected
-token at ''`. We're getting this error because we're not returning any JSON data
-from our controller action.
+Run the tests again. You'll see a new error:
+`JSON::ParserError: unexpected token at ''`. We're getting this error because
+we're not returning any JSON data from our controller action.
 
 If you start the Rails server and navigate to `/cheeses/1` or any other cheese
 record, the router will know what you're talking about so it won't return an
@@ -176,7 +176,7 @@ Run the tests to drop into the debugger and take a look at the value of
 
 Since we named the route `/cheeses/:id`, the ID is the value of the `:id` key,
 stored in `params[:id]`. You can verify that by checking the value of
-`params[:id]` in byebug. So next we can set up our `#show` action to find and
+`params[:id]` in `byebug`. So next we can set up our `#show` action to find and
 display the requested cheese:
 
 ```ruby
