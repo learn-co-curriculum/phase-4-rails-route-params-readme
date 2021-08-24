@@ -9,9 +9,9 @@
 
 Fork and clone this repo, then run:
 
-```sh
-bundle install
-rails db:migrate db:seed
+```console
+$ bundle install
+$ rails db:migrate db:seed
 ```
 
 This will download all the dependencies for our app and set up the database.
@@ -27,7 +27,7 @@ page that doesn't take any parameters and simply renders a view. For example:
 `localhost:3000/cheeses`. For Rails to process this request, the `routes.rb` file
 contains a route such as:
 
-```ruby
+```rb
 get '/cheeses', to: 'cheeses#index'
 ```
 
@@ -88,7 +88,7 @@ In review, what's the difference between static and dynamic routes?
 In order to setup a dynamic request feature, we've got some tests already in
 place:
 
-```ruby
+```rb
 # spec/requests/cheeses_spec.rb
 
 RSpec.describe 'Cheeses', type: :request do
@@ -115,7 +115,7 @@ Running `learn test` gives us an expected error:
 To correct this error, let's draw a route in `config/routes.rb` that maps to a
 show action in the `CheesesController`:
 
-```ruby
+```rb
 get '/cheeses/:id', to: 'cheeses#show'
 ```
 
@@ -130,7 +130,7 @@ You should see a new failure this time:
 This means that we need to create a corresponding `show` action in the
 `CheesesController`. Let's get this failure fixed by adding a show action to our controller:
 
-```ruby
+```rb
 # app/controllers/cheeses_controller.rb
 
 class CheesesController < ApplicationController
@@ -159,7 +159,7 @@ We first need to get the ID sent by the user through the dynamic URL. This
 variable is passed into the controller in a hash called `params`. Let's put a
 `byebug` inside our `#show` action:
 
-```ruby
+```rb
 # app/controllers/posts_controller.rb
 
 def show
@@ -170,7 +170,7 @@ end
 Run the tests to drop into the debugger and take a look at the value of
 `params`. You should see this:
 
-```bash
+```rb
 #<ActionController::Parameters {"controller"=>"cheeses", "action"=>"show", "id"=>"1"} permitted: false>
 ```
 
@@ -179,7 +179,7 @@ stored in `params[:id]`. You can verify that by checking the value of
 `params[:id]` in `byebug`. So next we can set up our `#show` action to find and
 display the requested cheese:
 
-```ruby
+```rb
 # app/controllers/posts_controller.rb
 
 def show
