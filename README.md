@@ -214,6 +214,14 @@ controller, so when a request comes in for `/cheeses/3`, you can access the
 number `3` in your controller using `params[:id]`, and then look up the
 associated record in the database.
 
+## Check For Understanding
+
+Before you move on, make sure you can answer the following questions:
+
+1. What do we mean when we say that a route is **dynamic**?
+2. How do we tell Rails that a route can receive a **parameter**?
+3. How do we retrieve the value of a parameter inside our controller?
+
 ## Resources
 
 - [Rails Routing](https://guides.rubyonrails.org/routing.html)
