@@ -160,7 +160,7 @@ variable is passed into the controller in a hash called `params`. Let's put a
 `byebug` inside our `#show` action:
 
 ```rb
-# app/controllers/posts_controller.rb
+# app/controllers/cheeses_controller.rb
 
 def show
   byebug
@@ -180,7 +180,7 @@ stored in `params[:id]`. You can verify that by checking the value of
 display the requested cheese:
 
 ```rb
-# app/controllers/posts_controller.rb
+# app/controllers/cheeses_controller.rb
 
 def show
   cheese = Cheese.find(params[:id])
